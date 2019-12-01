@@ -10,9 +10,9 @@ interface RecordedAudioOutput {
 }
 
 @Injectable({
-    providedIn: 'root'
-  })
-  export class AudioRecordingService  {
+  providedIn: 'root'
+})
+export class AudioRecordingService {
 
 
   private stream;

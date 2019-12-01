@@ -1,113 +1,115 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-  <title>Simple Map</title>
-  <meta name="viewport" content="initial-scale=1.0">
-  <meta charset="utf-8">
-  <style>
-    /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-    #map {
-      height: 100%;
-    }
-
-    /* Optional: Makes the sample page fill the window. */
-    html,
-    body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-    }
-
-  </style>
-</head>
 <div class="text-center">
   <img src="/assets/titulo-horizontal.png" width="300" height="150" class="d-inline-block align-top img-title" alt="">
 </div>
 
-<body class="gap-top40">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-6">
-        <div class="row">
-          <div class="col-12 text-center">
-            <h4 class="title">Área de alunos do ConstruLap no Jardim Lapena - São Paulo</h4>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-12">
-            <agm-map [zoom]="zoom" [latitude]="-23.4895719" [longitude]="-46.4506249" (mapReady)="onMapLoad($event)">
-            </agm-map>
-          </div>
-        </div>
-      </div>
-      <div class="col-6">
-        <div class="row">
-          <div class="col-12 text-center">
-            <h4 class="title">Áreas reformadas pelo ConstruLap no Jardim Lapena - São Paulo</h4>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-12">
-            <agm-map [zoom]="zoom" [latitude]="-23.4895719" [longitude]="-46.4506249"
-              (mapReady)="onMapConstruLoad($event)">
-              <agm-marker [latitude]="-23.4891719" [longitude]="-46.4502212"></agm-marker>
-              <agm-marker [latitude]="-23.4892745" [longitude]="-46.4504245"></agm-marker>
-              <agm-marker [latitude]="-23.4893743" [longitude]="-46.4501265"></agm-marker>
-              <agm-marker [latitude]="-23.4894723" [longitude]="-46.4505212"></agm-marker>
-              <agm-marker [latitude]="-23.4896712" [longitude]="-46.4506232"></agm-marker>
-              <agm-marker [latitude]="-23.4897745" [longitude]="-46.4507223"></agm-marker>
-              <agm-marker [latitude]="-23.4898712" [longitude]="-46.4508222"></agm-marker>
-              <agm-marker [latitude]="-23.4899798" [longitude]="-46.4501212"></agm-marker>
-            </agm-map>
-          </div>
-        </div>
-      </div>
-    </div>
 
-
-    <hr />
-
-    <div class="row gap-top40">
-      <div class="col-4 text-center">
-        <p class="title-number">125</p>
-
-        <p class="title-description">Alunos</p>
-      </div>
-      <div class="col-4 text-center">
-        <p class="title-number">25</p>
-
-        <p class="title-description">Construtores profissionais</p>
-      </div>
-      <div class="col-4 text-center">
-        <p class="title-number">635</p>
-
-        <p class="title-description">Obras a fazer</p>
-      </div>
-    </div>
-  </div>
-
+<div class="container-fluid gap-top40">
   <div class="row">
-    <div class="col-2 offset-10 text-center">
-        <img src="/assets/bot.png" width="180" height="150" class="d-inline-block align-top img-title img-bot" alt="">
+    <div class="col-6">
+      <div class="row">
+        <div class="col-12 text-center">
+          <h4 class="title">Área de alunos do ConstruLap no Jardim Lapena - São Paulo</h4>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <agm-map [zoom]="zoom" [latitude]="-23.4895719" [longitude]="-46.4506249" (mapReady)="onMapLoad($event)">
+          </agm-map>
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="row">
+        <div class="col-12 text-center">
+          <h4 class="title">Áreas reformadas pelo ConstruLap no Jardim Lapena - São Paulo</h4>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <agm-map [zoom]="zoom" [latitude]="-23.4895719" [longitude]="-46.4506249"
+            (mapReady)="onMapConstruLoad($event)">
+            <agm-marker [latitude]="-23.4891719" [longitude]="-46.4502212"></agm-marker>
+            <agm-marker [latitude]="-23.4892745" [longitude]="-46.4504245"></agm-marker>
+            <agm-marker [latitude]="-23.4893743" [longitude]="-46.4501265"></agm-marker>
+            <agm-marker [latitude]="-23.4894723" [longitude]="-46.4505212"></agm-marker>
+            <agm-marker [latitude]="-23.4896712" [longitude]="-46.4506232"></agm-marker>
+            <agm-marker [latitude]="-23.4897745" [longitude]="-46.4507223"></agm-marker>
+            <agm-marker [latitude]="-23.4898712" [longitude]="-46.4508222"></agm-marker>
+            <agm-marker [latitude]="-23.4899798" [longitude]="-46.4501212"></agm-marker>
+          </agm-map>
+        </div>
+      </div>
     </div>
   </div>
-  
 
-  <div>
-      <button class="start-button" *ngIf="!isRecording && !blobUrl" (click)="startRecording()">Start Recording</button>
-      <button class="stop-button" *ngIf="isRecording && !blobUrl" (click)="stopRecording()">Stop Recording</button>
-      <button class="cancel-button" *ngIf="!isRecording && blobUrl" (click)="clearRecordedData()">Clear Recording</button>
-      <div *ngIf="isRecording && !blobUrl"> {{recordedTime}} </div>
-      <div>
-      <audio *ngIf="!isRecording && blobUrl"  controls>
+  <!-- <div>
+    <button class="start-button" >Start Recording</button>
+    <button class="stop-button" *ngIf="isRecording && !blobUrl" (click)="stopRecording()">Stop Recording</button>
+    <button class="cancel-button" *ngIf="!isRecording && blobUrl" (click)="clearRecordedData()">Clear
+      Recording</button>
+    <div *ngIf="isRecording && !blobUrl"> {{recordedTime}} </div>
+    <div>
+      <audio *ngIf="!isRecording && blobUrl" controls>
         <source [src]="blobUrl" type="audio/webm">
       </audio>
+    </div>
+  </div> -->
+
+
+  <hr />
+
+  <div class="row gap-top40">
+    <div class="col-4 text-center">
+      <p class="title-number">125</p>
+
+      <p class="title-description">Alunos</p>
+    </div>
+    <div class="col-4 text-center">
+      <p class="title-number">25</p>
+
+      <p class="title-description">Construtores profissionais</p>
+    </div>
+    <div class="col-4 text-center">
+      <p class="title-number">635</p>
+
+      <p class="title-description">Obras a fazer</p>
+    </div>
+  </div>
+
+
+  <hr />
+  <hr />
+
+  <div class="row">
+    <div class="col-10 ">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h4 *ngIf="!loader" class="title">Sou o iLap e estou aqui para lhe ajudar!</h4>
+            </div>
+          </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="loader" *ngIf="loader"></div>
+        </div>
+      </div>
+      <div *ngIf="!loader && responsebot != ''" class="speech-bubble response-bot">
+        <p  class="line-1 anim-typewriter">{{responsebot}}</p>
+      </div>
+    </div>
+    <div class="col-2 text-center margin-bottom100">
+
+      <div class="row">
+        <div class="col-12">
+          <img *ngIf="!isRecording" (click)="startRecording()" src="/assets/bot.png" width="180" height="150"
+            class="d-inline-block align-top img-title img-bot" alt="">
+          <img *ngIf="isRecording" (click)="stopRecording()" src="/assets/stop.png" width="50" height="50"
+            class="d-inline-block align-top img-title gap-top40" alt="">
+          <div *ngIf="isRecording && !blobUrl"> {{recordedTime}} </div>
+        </div>
       </div>
     </div>
 
-  
-</body>
 
-</html>
+  </div>
+
+</div>

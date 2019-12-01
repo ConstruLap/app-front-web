@@ -9,6 +9,7 @@ import { Subject, Observable } from 'rxjs';
 import * as moment from 'moment'
 import { DomSanitizer } from '@angular/platform-browser';
 import { AudioRecordingService } from 'src/provider/audio-recorder.service';
+import { DashProvider } from 'src/provider/dash.provider';
 
 @Component({
   selector: 'dash',
@@ -27,10 +28,17 @@ export class DashComponent implements OnInit {
   recordedTime;
   blobUrl;
 
+  responsebot:string;
+  loader: boolean;
+
   map: google.maps.Map = null;
   heatmap: google.maps.visualization.HeatmapLayer = null;
 
-  constructor(private audioRecordingService: AudioRecordingService, private sanitizer: DomSanitizer) {
+  constructor(
+    private audioRecordingService: AudioRecordingService,
+    private sanitizer: DomSanitizer,
+    private dashProvider: DashProvider,
+  ) {
     this.audioRecordingService.recordingFailed().subscribe(() => {
       this.isRecording = false;
     });
@@ -40,12 +48,48 @@ export class DashComponent implements OnInit {
     });
 
     this.audioRecordingService.getRecordedBlob().subscribe((data) => {
+      this.loader = true;
       this.blobUrl = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(data.blob));
+
+      // let xhr = new XMLHttpRequest();
+      // xhr.open("GET", URL.createObjectURL(data.blob), true);
+      // xhr.responseType = "blob";
+      // xhr.onload = function (e) {
+      //   if (this.status == 200) {
+      //     const blob = this.response;
+      //     const a = document.createElement("a");
+      //     document.body.appendChild(a);
+      //     const blobUrl = window.URL.createObjectURL(blob);
+      //     a.href = blobUrl;
+      //     a.download = "xxxx";
+      //     a.click();
+      //     setTimeout(() => {
+      //       window.URL.revokeObjectURL(blobUrl);
+      //       document.body.removeChild(a);
+      //     }, 0);
+      //   }
+      // };
+      // xhr.send();
+
+    
+
+      let formData = new FormData();
+      formData.append("uploads[]", data.blob, URL.createObjectURL(data.blob));
+
+      this.dashProvider.uploadDocument(formData)
+        .subscribe((res:any) => {
+          this.responsebot = res;
+          this.loader = false;
+        }, err => {
+          console.log(err);
+          this.loader = false;
+        })
     });
   }
 
   ngOnInit() {
-
+    this.loader = false;
+    this.responsebot = "";
   }
 
   onMapLoad(mapInstance: google.maps.Map) {
